@@ -2,6 +2,7 @@
 const fs = require("fs")
 const prompt = require("prompt")
 const svgdom = require("svgdom")
+
 //using prompt to get values and generate custom logo
 prompt.get(
   {
@@ -25,14 +26,35 @@ prompt.get(
         required: true
       },
     }
-  })
+  },
+  console.log('Logo saved to logo.svg')
+  (err, result) => {
+    if (err) {
+      console.error(err)
+      return
+    }
 
-// prompt user {
-//   desired Text to generate (up to 3 characters)
-//   text color (enter color keyword, or hexadecimal)
-//   desired shape (list of: circle, triangle, and square)
-//   color of the shape
-//   GENERATES SVG FILE named logo.svg 
-//   console.log generated logo 
-//   pic size 300x200
-// }
+    let shape
+    if (result.shape === 'circle') {
+      shape = new Circle(result.shapeColor)
+    }
+    else {
+      console.error('Unsupported shape:', result.shape)
+      return
+    }
+
+    const svg = svgdom.createSVGDocument()
+    const shapeElement = svg.createElement(shape.render())
+    svg.appendChild(shapeElement)
+    const svgString = svg.serialize()
+
+    fs.writeFile('logo.svg', svgString, err => {
+      if (err) {
+        console.error(err)
+        return
+      }
+
+      console.log('Logo saved to logo.svg')
+    })
+  }
+)
