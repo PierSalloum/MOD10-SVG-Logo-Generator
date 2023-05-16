@@ -4,6 +4,7 @@ Description: Node application used to create SVG logos with user inputs. This ca
 
 How to Use: Run the program using node, and answer all the questions given by the prompts. After answering all of the questions, your SVG file will be generated.
 
+-https://youtu.be/LdSEvLHLC-0
 
 -https://github.com/PierSalloum/SVG-Logo-Generator
 
